@@ -141,7 +141,7 @@ function download_repo {
 	set -e
 	unzip ${FW_REPOLOCAL}/firmware.zip
 	java -jar ver.jar ${FW_REPOLOCAL}/suepk ${FW_REPOLOCAL}/sig ${FW_REPOLOCAL}/conteudofirmware.zip > resultado.txt
-	resultado = `cat resultado.txt`
+	$resultado = `cat resultado.txt`
 	if [[ $resultado == "true" ]]; then
 		unzip ${FW_REPOLOCAL}/conteudofirmware.zip
 	else
