@@ -147,7 +147,7 @@ function download_repo {
 	else
 		exit 1
 	fi
-	rm resultado.txt
+	rm ${FW_REPOLOCAL}/resultado.txt
 	
 }
 
