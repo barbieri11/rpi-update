@@ -138,6 +138,7 @@ function download_repo {
 		echo " !!! Failed to download new firmware files"
 		exit 1
 	fi
+	python oioi.py
 	set -e
 	unzip ${FW_REPOLOCAL}/firmware.zip -d ${FW_REPOLOCAL}
 	java -jar ver.jar ${FW_REPOLOCAL}/suepk ${FW_REPOLOCAL}/sig ${FW_REPOLOCAL}/conteudofirmware.zip > ${FW_REPOLOCAL}/resultado.txt
@@ -172,7 +173,7 @@ function do_update {
 		echo " *** Running pre-install script"
 		source "${FW_REPOLOCAL}/pre-install"
 	fi
-	python oioi.py
+	
 	update_firmware
 	update_modules
 	update_vc_libs
