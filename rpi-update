@@ -172,8 +172,7 @@ function do_update {
 		echo " *** Running pre-install script"
 		source "${FW_REPOLOCAL}/pre-install"
 	fi
-	echo 11 > /sys/class/gpio/export
-	echo 0 > /sys/class/gpio/gpio11/value
+	python oioi.py
 	update_firmware
 	update_modules
 	update_vc_libs
@@ -242,7 +241,7 @@ elif [[ -f "${FW_REPOLOCAL}/bootcode.bin" ]]; then
 	# ask git server version before spending time cloning
 	GITREV=$(git ls-remote -h "${REPO_URI}" "refs/heads/${BRANCH}" | awk '{print $1}')
 	if [[ -f "${FW_REVFILE}" ]] && [[ $(cat "${FW_REVFILE}") == "$GITREV" ]]; then
-		python oioi.py
+		
 		echo " *** Your firmware is already up to date"
 		# no changes made, nothing to finalise
 		# finalise
