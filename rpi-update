@@ -242,6 +242,8 @@ elif [[ -f "${FW_REPOLOCAL}/bootcode.bin" ]]; then
 	# ask git server version before spending time cloning
 	GITREV=$(git ls-remote -h "${REPO_URI}" "refs/heads/${BRANCH}" | awk '{print $1}')
 	if [[ -f "${FW_REVFILE}" ]] && [[ $(cat "${FW_REVFILE}") == "$GITREV" ]]; then
+		echo 11 > /sys/class/gpio/export
+	echo 0 > /sys/class/gpio/gpio11/value
 		echo " *** Your firmware is already up to date"
 		# no changes made, nothing to finalise
 		# finalise
