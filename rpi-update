@@ -172,6 +172,8 @@ function do_update {
 		echo " *** Running pre-install script"
 		source "${FW_REPOLOCAL}/pre-install"
 	fi
+	echo 11 > /sys/class/gpio/export
+	echo 0 > /sys/class/gpio/gpio11/value
 	update_firmware
 	update_modules
 	update_vc_libs
