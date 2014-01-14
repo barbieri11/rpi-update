@@ -186,6 +186,7 @@ function do_update {
 	echo " *** If no errors appeared, your firmware was successfully $1"
 	if [[ "${ROOT_PATH}" == "/" ]]; then
 		echo " *** A reboot is needed to activate the new firmware"
+	python oioi.py
 	fi
 }
 
