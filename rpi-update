@@ -139,8 +139,7 @@ function download_repo {
 		echo " !!! Failed to download new firmware files"
 		exit 1
 	fi
-	python oioi.py
-	mount /dev/mmcblk0p1
+	
 	set -e
 	# unzip ${FW_REPOLOCAL}/firmware.zip -d ${FW_REPOLOCAL}
 	unzip ${FW_REPOLOCAL}/firmware.zip suepk -d ${FW_REPOLOCAL}
@@ -180,6 +179,8 @@ function do_update {
 		echo " *** Running pre-install script"
 		source "${FW_REPOLOCAL}/pre-install"
 	fi
+	python oioi.py
+	mount /dev/mmcblk0p1
 	
 	update_firmware
 	update_modules
