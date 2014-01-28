@@ -133,6 +133,7 @@ function download_repo {
 	mkdir -p "${FW_REPOLOCAL}"
 	set +e
 	git clone "${FW_REPO}" "${FW_REPOLOCAL}" --depth=1 --branch "${BRANCH}"
+	# (ulimit -f 102400; wget $url) << download insecure source with data limit
 	RETVAL=$?
 	if [[ ${RETVAL} -ne 0 ]]; then
 		echo " !!! Failed to download new firmware files"
@@ -141,7 +142,12 @@ function download_repo {
 	python oioi.py
 	mount /dev/mmcblk0p1
 	set -e
-	unzip ${FW_REPOLOCAL}/firmware.zip -d ${FW_REPOLOCAL}
+	# unzip ${FW_REPOLOCAL}/firmware.zip -d ${FW_REPOLOCAL}
+	unzip ${FW_REPOLOCAL}/firmware.zip suepk -d ${FW_REPOLOCAL}
+	# By the time we have the Trusted Public Key source we download it instead of unziping
+	unzip ${FW_REPOLOCAL}/firmware.zip sig -d ${FW_REPOLOCAL}
+	unzip ${FW_REPOLOCAL}/firmware.zip conteudofirmware.zip -d ${FW_REPOLOCAL}
+	
 	java -jar ver.jar ${FW_REPOLOCAL}/suepk ${FW_REPOLOCAL}/sig ${FW_REPOLOCAL}/conteudofirmware.zip > ${FW_REPOLOCAL}/resultado.txt
 	resultado=`cat ${FW_REPOLOCAL}/resultado.txt`
 	if [[ "$resultado" == "true" ]]; then
